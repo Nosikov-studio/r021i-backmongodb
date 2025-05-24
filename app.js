@@ -101,7 +101,7 @@ async function run() {
     });
 
  //************** */ получаем один документ по API (json)*****************
-const { ObjectId } = require('mongodb');
+//const { ObjectId } = require('mongodb');
 
 app.get('/api/:id', async (req, res) => {
   try {
