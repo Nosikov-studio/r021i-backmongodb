@@ -184,7 +184,7 @@ app.post('/api/edit', urlencodedParser, async (req, res) => {
       try {
           const id = req.params.id;
         // Получаем все документы из коллекции
-        result = await collection.deleteOne({id:id});
+        result = await collection.deleteOne({id: id});
         // res.status(200).json(us);
         res.json(result);
 
