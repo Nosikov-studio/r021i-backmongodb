@@ -147,9 +147,9 @@ app.post('/api/edit', urlencodedParser, async (req, res) => {
 
     const result = await collection.findOneAndUpdate(filter, updateDoc, options);
 
-    if (!result.value) {
-      return res.status(404).json({ message: "Документ не найден" });
-    }
+    // if (!result.value) {
+    //   return res.status(404).json({ message: "Документ не найден" });
+    // }
 
     res.status(200).json(result.value);
 
