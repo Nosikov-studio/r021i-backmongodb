@@ -100,8 +100,7 @@ async function run() {
       }
     });
 
- //************** */ получаем один документ по API (json)*****************
-//const { ObjectId } = require('mongodb');
+ //************** */ получаем один документ по API (json) по _id (у всех есть)*****************
 
 app.get('/api/:_id', async (req, res) => {
   try {
@@ -123,7 +122,7 @@ app.get('/api/:_id', async (req, res) => {
   }
 });
    
- //************** */ получаем один документ по API (json)*****************
+ //************** */ получаем один документ по API (json) по id (не у всех есть!)*****************
 
 
 app.get('/api/id/:id', async (req, res) => {
@@ -146,7 +145,21 @@ app.get('/api/id/:id', async (req, res) => {
   }
 });
 
+//************** */ Вставляем документ по API *****************
+        app.post('/api', urlencodedParser, async (req, res) => {
+      try {
+         const name = req.body.name;
+         const age = req.body.age;
+         const newUser = { name, age };
+        // Получаем все документы из коллекции
+        result = await collection.insertOne(newUser);
+        // res.status(200).json(us);
+        res.json(newUser);
 
+      } catch (err) {
+        res.status(500).json({ message: "Ошибка", error: err });
+      }
+    });
 
 // Запускаем сервер только после успешного подключения к БД
         app.listen(40444, () => {
