@@ -107,22 +107,56 @@ app.get('/api/:_id', async (req, res) => {
 
 //************** */ Редактируем конкретный документ по API ***************** ЕСТЬ КОСЯК!!! (используется только id без _id)
  // ДОРАБОТАТЬ!     
-app.post('/api/edit', urlencodedParser, async (req, res) => {
-      try {
+// app.post('/api/edit', urlencodedParser, async (req, res) => {
+//       try {
          
-         const id = req.body._id;
-         const name = req.body.name;
-         const age = req.body.age;
-         const newUser = { id, name, age };
-        // Получаем все документы из коллекции
-        result = await collection.findOneAndUpdate({_id: id}, { $set: {name: name, age: age}}, { returnDocument: "after" });;
-        // res.status(200).json(us);
-        res.json(newUser);
+//          const id = req.body._id;
+//          const name = req.body.name;
+//          const age = req.body.age;
+//          const newUser = { id, name, age };
+//         // Получаем все документы из коллекции
+//         result = await collection.findOneAndUpdate({_id: id}, { $set: {name: name, age: age}}, { returnDocument: "after" });;
+//         // res.status(200).json(us);
+//         res.json(newUser);
 
-      } catch (err) {
-        res.status(500).json({ message: "Ошибка", error: err });
+//       } catch (err) {
+//         res.status(500).json({ message: "Ошибка", error: err });
+//       }
+//     });
+
+
+app.post('/api/edit', urlencodedParser, async (req, res) => {
+  try {
+    const id = req.body._id;
+    const name = req.body.name;
+    const age = req.body.age;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Неверный формат _id" });
+    }
+
+    const filter = { _id: new ObjectId(id) };
+    const updateDoc = {
+      $set: {
+        name: name,
+        age: age
       }
-    });
+    };
+
+    const options = { returnDocument: "after" }; // Возвращает обновленный документ
+
+    const result = await collection.findOneAndUpdate(filter, updateDoc, options);
+
+    if (!result.value) {
+      return res.status(404).json({ message: "Документ не найден" });
+    }
+
+    res.status(200).json(result.value);
+
+  } catch (err) {
+    res.status(500).json({ message: "Ошибка при обновлении", error: err.message });
+  }
+});
 //************** */ Удаляем документ по API *****************
         app.post('/delete/:_id',urlencodedParser, async (req, res) => {
       try {
