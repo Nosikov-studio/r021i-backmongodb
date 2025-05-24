@@ -123,6 +123,30 @@ app.get('/api/:_id', async (req, res) => {
   }
 });
    
+ //************** */ получаем один документ по API (json)*****************
+
+
+app.get('/api/id/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Неверный формат id" });
+    }
+
+    const u = await collection.findOne({ id: id });
+
+    if (!u) {
+      return res.status(404).json({ message: "Документ не найден" });
+    }
+
+    res.status(200).json(u);
+  } catch (err) {
+    res.status(500).json({ message: "Ошибка при получении данных", error: err.message });
+  }
+});
+
+
 
 // Запускаем сервер только после успешного подключения к БД
         app.listen(40444, () => {
