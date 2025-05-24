@@ -103,7 +103,7 @@ async function run() {
         app.get('/api/:id', async (req, res) => {
       try {
         const id=req.params.id;
-        const u = await collection.findOne({id: id});
+        const u = await collection.findOne({_id: id});
         res.status(200).json(u);
         
 
