@@ -110,7 +110,7 @@ app.get('/api/:_id', async (req, res) => {
 app.post('/api/edit', urlencodedParser, async (req, res) => {
       try {
          
-         const id = Number(req.body._id);
+         const id = req.body._id;
          const name = req.body.name;
          const age = req.body.age;
          const newUser = { id, name, age };
