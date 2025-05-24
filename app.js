@@ -58,7 +58,7 @@ async function run() {
     app.use(express.json());
     app.use(cors()); // если нужен CORS
 
-    // Вставляем ваш маршрут здесь
+//************** */ получаем все данные в шаблон*****************
         app.get('/', async (req, res) => {
       try {
         // Получаем все документы из коллекции
@@ -71,7 +71,7 @@ async function run() {
         res.status(500).json({ message: "Ошибка при получении данных", error: err });
       }
     });
-
+//************** */ Вставляем запись из шаблона*****************
         app.post('/create', urlencodedParser, async (req, res) => {
       try {
          const name = req.body.name;
@@ -84,6 +84,18 @@ async function run() {
 
       } catch (err) {
         res.status(500).json({ message: "Ошибка", error: err });
+      }
+    });
+//************** */ получаем все данные по API (json)*****************
+        app.get('/api', async (req, res) => {
+      try {
+        // Получаем все документы из коллекции
+        const us = await collection.find().toArray();
+        res.status(200).json(us);
+        
+
+      } catch (err) {
+        res.status(500).json({ message: "Ошибка при получении данных", error: err });
       }
     });
 
