@@ -128,7 +128,7 @@ app.get('/api/:_id', async (req, res) => {
 
 app.get('/api/id/:id', async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = Number(req.params.id);
 
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Неверный формат id" });
