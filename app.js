@@ -161,8 +161,9 @@ app.get('/api/id/:id', async (req, res) => {
       }
     });
 
-//************** */ Редактируем конкретный документ по API *****************
-        app.post('/api/edit', urlencodedParser, async (req, res) => {
+//************** */ Редактируем конкретный документ по API ***************** ЕСТЬ КОСЯК!!! (используется только id без _id)
+ // ДОРАБОТАТЬ!     
+app.post('/api/edit', urlencodedParser, async (req, res) => {
       try {
          
          const id = req.body.id;
@@ -178,6 +179,23 @@ app.get('/api/id/:id', async (req, res) => {
         res.status(500).json({ message: "Ошибка", error: err });
       }
     });
+//************** */ Удаляем документ по API *****************
+        app.post('/delete/:id', async (req, res) => {
+      try {
+          const id = req.params.id;
+        // Получаем все документы из коллекции
+        result = await collection.deleteOne({id:id});
+        // res.status(200).json(us);
+        res.json(result);
+
+      } catch (err) {
+        res.status(500).json({ message: "Ошибка", error: err });
+      }
+    });
+
+
+
+
 
 // Запускаем сервер только после успешного подключения к БД
         app.listen(40444, () => {
