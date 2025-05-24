@@ -180,7 +180,7 @@ app.post('/api/edit', urlencodedParser, async (req, res) => {
       }
     });
 //************** */ Удаляем документ по API *****************
-        app.post('/delete/:id', async (req, res) => {
+        app.post('/delete/:id',urlencodedParser, async (req, res) => {
       try {
           const id = req.params.id;
         // Получаем все документы из коллекции
