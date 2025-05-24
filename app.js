@@ -103,15 +103,15 @@ async function run() {
  //************** */ получаем один документ по API (json)*****************
 //const { ObjectId } = require('mongodb');
 
-app.get('/api/:id', async (req, res) => {
+app.get('/api/:_id', async (req, res) => {
   try {
-    const id = req.params.id;
+    const _id = req.params._id;
 
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Неверный формат id" });
     }
 
-    const u = await collection.findOne({ _id: new ObjectId(id) });
+    const u = await collection.findOne({ _id: new ObjectId(_id) });
 
     if (!u) {
       return res.status(404).json({ message: "Документ не найден" });
