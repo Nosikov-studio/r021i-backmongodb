@@ -161,6 +161,24 @@ app.get('/api/id/:id', async (req, res) => {
       }
     });
 
+//************** */ Редактируем конкретный документ по API *****************
+        app.post('/api/edit', urlencodedParser, async (req, res) => {
+      try {
+         
+         const id = req.body.id;
+         const name = req.body.name;
+         const age = req.body.age;
+         const newUser = { id, name, age };
+        // Получаем все документы из коллекции
+        result = await collection.findOneAndUpdate({id: id}, { $set: {name: name, age: age}}, { returnDocument: "after" });;
+        // res.status(200).json(us);
+        res.json(newUser);
+
+      } catch (err) {
+        res.status(500).json({ message: "Ошибка", error: err });
+      }
+    });
+
 // Запускаем сервер только после успешного подключения к БД
         app.listen(40444, () => {
         console.log('Сервер запущен на http://localhost:40444');
