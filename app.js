@@ -105,13 +105,13 @@ async function run() {
 
 app.get('/api/:_id', async (req, res) => {
   try {
-    const _id = req.params._id;
+    const id = req.params._id;
 
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ message: "Неверный формат id" });
     }
 
-    const u = await collection.findOne({ _id: new ObjectId(_id) });
+    const u = await collection.findOne({ _id: new ObjectId(id) });
 
     if (!u) {
       return res.status(404).json({ message: "Документ не найден" });
