@@ -151,7 +151,7 @@ app.post('/api/edit', urlencodedParser, async (req, res) => {
     //   return res.status(404).json({ message: "Документ не найден" });
     // }
 
-    res.status(200).json(result.value);
+    res.status(200).json(updateDoc);
 
   } catch (err) {
     res.status(500).json({ message: "Ошибка при обновлении", error: err.message });
