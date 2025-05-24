@@ -1,6 +1,7 @@
 //const mysql = require("mysql2");
 const express = require("express");
 const cors = require('cors');
+const { ObjectId } = require("mongodb");
 const MongoClient = require('mongodb').MongoClient; // 
 const app = express();
 const urlencodedParser = express.urlencoded({extended: false});
@@ -103,7 +104,7 @@ async function run() {
         app.get('/api/:id', async (req, res) => {
       try {
         const id=req.params.id;
-        const u = await collection.findOne({_id: id});
+        const u = await collection.findOne({_id: ObjectId(id)});
         res.status(200).json(u);
         
 
