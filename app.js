@@ -99,6 +99,19 @@ async function run() {
       }
     });
 
+ //************** */ получаем один документ по API (json)*****************
+        app.get('/api/:id', async (req, res) => {
+      try {
+        const id=req.params.id;
+        const u = await collection.findOne({id: id});
+        res.status(200).json(u);
+        
+
+      } catch (err) {
+        res.status(500).json({ message: "Ошибка при получении данных", error: err });
+      }
+    });
+   
 
 // Запускаем сервер только после успешного подключения к БД
         app.listen(40444, () => {
